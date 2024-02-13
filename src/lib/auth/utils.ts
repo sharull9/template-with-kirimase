@@ -1,5 +1,6 @@
 import { db } from "@/lib/db/index";
 import { PrismaAdapter } from "@auth/prisma-adapter"
+import type { Adapter } from "next-auth/adapters";
 import { DefaultSession, getServerSession, NextAuthOptions } from "next-auth";
 import { redirect } from "next/navigation";
 import { env } from "@/lib/env.mjs"
@@ -25,7 +26,7 @@ export type AuthSession = {
 };
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(db),
+  adapter: PrismaAdapter(db) as Adapter,
   callbacks: {
     session: ({ session, user }) => {
       session.user.id = user.id;
